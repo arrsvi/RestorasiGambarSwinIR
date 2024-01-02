@@ -615,15 +615,15 @@ class UpsampleOneStep(nn.Sequential):
         return flops
 
 
-class SwinIR(nn.Module):
-    r""" SwinIR
-        A PyTorch impl of : `SwinIR: Image Restoration Using Swin Transformer`, based on Swin Transformer.
+class SwinIRvSAI(nn.Module):
+    r""" SwinIRvSAI
+        A PyTorch impl of : `SwinIRvSAI: Image Restoration Using Swin Transformer`, based on Swin Transformer.
 
     Args:
         img_size (int | tuple(int)): Input image size. Default 64
         patch_size (int | tuple(int)): Patch size. Default: 1
         in_chans (int): Number of input image channels. Default: 3
-        embed_dim (int): Patch embedding dimension. Default: 96
+        embed_dim (int): Patch embedding dimension. Default: 112
         depths (tuple(int)): Depth of each Swin Transformer layer.
         num_heads (tuple(int)): Number of attention heads in different layers.
         window_size (int): Window size. Default: 7
@@ -644,13 +644,13 @@ class SwinIR(nn.Module):
     """
 
     def __init__(self, img_size=64, patch_size=1, in_chans=3,
-                 embed_dim=96, depths=[6, 6, 6, 6], num_heads=[6, 6, 6, 6],
-                 window_size=7, mlp_ratio=4., qkv_bias=True, qk_scale=None,
-                 drop_rate=0., attn_drop_rate=0., drop_path_rate=0.1,
+                 embed_dim=112, depths=[8, 8, 8, 8], num_heads=[8, 8, 8, 8],
+                 window_size=7, mlp_ratio=8., qkv_bias=True, qk_scale=None,
+                 drop_rate=0., attn_drop_rate=0., drop_path_rate=0.5,
                  norm_layer=nn.LayerNorm, ape=False, patch_norm=True,
-                 use_checkpoint=False, upscale=2, img_range=1., upsampler='', resi_connection='1conv',
+                 use_checkpoint=False, upscale=4, img_range=1., upsampler='nearest+conv', resi_connection='3conv',
                  **kwargs):
-        super(SwinIR, self).__init__()
+        super(SwinIRvSAI, self).__init__()
         num_in_ch = in_chans
         num_out_ch = in_chans
         num_feat = 64
